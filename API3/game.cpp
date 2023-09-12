@@ -56,7 +56,7 @@ int main()
     if (rounds == int_max)
     {
         cout << "Te has quedado sin intentos :( \nEl numero correcto era: " << secret_num << endl;
-        cout << "Si desea volver a jugar ingrese el numero 1: ";
+        cout << "Si desea volver a jugar ingrese el numero 1 \no ingrese cualquier otro digito para terminar: ";
         cin >> play_again;
 
         if (play_again == 1)
