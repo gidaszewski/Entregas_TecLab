@@ -33,6 +33,7 @@ int main()
     // setup
     int rounds = 0;
     int int_left = int_max;
+    int number_entered[int_max];
 
     while (rounds < int_max)
     {
@@ -47,10 +48,30 @@ int main()
         }
         else
         {
-            cout << "Numero incorrecto. \n";
+            int indice = -1;
+            for (int i = 0; i < sizeof(number_entered) / sizeof(number_entered[0]); i++)
+            {
+                int numActual = number_entered[i];
+                if (numActual == user_number)
+                {
+                    indice = i;
+                    break;
+                }
+            }
+            if (indice == -1)
+            {
+                number_entered[rounds] = user_number;
+                cout << "Numero incorrecto. \nIngresaste el numero:" << number_entered[rounds] << endl;
 
-            rounds++;
-            int_left--;
+                rounds++;
+                int_left--;
+            }
+            else
+            {
+                cout << "Ya has ingresado ese número. \n";
+                cout << "Intento " << (rounds + 1) << " - Te quedan " << int_left << " intentos. \nIngresa un número: ";
+                cin >> user_number;
+            }
         }
     }
     if (rounds == int_max)
