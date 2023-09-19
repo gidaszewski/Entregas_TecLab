@@ -5,6 +5,8 @@
 
 using namespace std;
 
+void numsEntered(int user_nums[], int rounds);
+
 int main()
 {
     setlocale(LC_ALL, "");
@@ -23,72 +25,93 @@ int main()
 
     cout << "Ingrese el limite superior: ";
     cin >> lim_sup;
+    while (lim_sup < lim_inf)
+    {
+        cout << "Ingresa un limite superior válido. Debe ser mayor al limite inferior que ingresaste." << endl;
+        cout << "Ingrese el limite superior: ";
+        cin >> lim_sup;
+    }
 
     cout << "Ingrese la cantidad de intentos máximos: ";
     cin >> int_max;
+    while (int_max < 1)
+    {
+        cout << "La cantidad de intentos máximos debe ser mayor que 1." << endl;
+        cout << "Ingrese la cantidad de intentos máximos: ";
+        cin >> int_max;
+    }
 
     // random num
     int secret_num = rand() % (lim_sup - lim_inf + 1) + lim_inf;
 
+    // array
+    int user_nums[int_max];
+
     // setup
     int rounds = 0;
+    int repetitive = 0;
     int int_left = int_max;
-    int number_entered[int_max];
 
     while (rounds < int_max)
     {
         // input
-        cout << "Intento " << (rounds + 1) << " - Te quedan " << int_left << " intentos. \nIngresa un número: ";
+        cout << "Adivine el numero creado aleatoriamente entre " << lim_inf << " y " << lim_sup << "\nIntento " << (rounds + 1) << " - Te quedan " << int_left << " intentos. \nIngresa un número: ";
         cin >> user_number;
 
-        if (user_number == secret_num)
+        if (user_number < lim_inf || user_number > lim_sup)
         {
-            cout << "Felicidades! Adivinaste el número." << endl;
-            break;
+            cout << "El numero ingresado no está dentro del rango especificado.";
+            cout << "\nIntento " << (rounds + 1) << " - Te quedan " << int_left << " intentos. \nIngresa un número: ";
+            cin >> user_number;
         }
         else
         {
-            int indice = -1;
-            for (int i = 0; i < sizeof(number_entered) / sizeof(number_entered[0]); i++)
+            if (user_number == secret_num)
             {
-                int numActual = number_entered[i];
-                if (numActual == user_number)
-                {
-                    indice = i;
-                    break;
-                }
-            }
-            if (indice == -1)
-            {
-                number_entered[rounds] = user_number;
-                cout << "Numero incorrecto. \nIngresaste el numero:" << number_entered[rounds] << endl;
-
-                rounds++;
-                int_left--;
+                cout << "Felicidades! Adivinaste el número. Lo hiciste en " << rounds << " intentos" << endl;
+                break;
             }
             else
             {
-                cout << "Ya has ingresado ese número. \n";
-                cout << "Intento " << (rounds + 1) << " - Te quedan " << int_left << " intentos. \nIngresa un número: ";
-                cin >> user_number;
+                for (int i = 0; i < rounds; i++)
+                {
+                    if (user_nums[i] == user_number)
+                    {
+                        cout << "El numero " << user_number << " ya ha sido ingresado anteriormente." << endl;
+                        repetitive = 1;
+                        rounds--;
+                        int_left++;
+                        break;
+                    }
+                }
+
+                if (!repetitive)
+                {
+                    user_nums[rounds] = user_number;
+                }
+                cout << "Numero incorrecto. \n";
+
+                rounds++;
+                int_left--;
             }
         }
     }
     if (rounds == int_max)
     {
         cout << "Te has quedado sin intentos :( \nEl numero correcto era: " << secret_num << endl;
-        cout << "Si desea volver a jugar ingrese el numero 1 \no ingrese cualquier otro digito para terminar: ";
-        cin >> play_again;
-
-        if (play_again == 1)
-        {
-            main();
-        }
-        else
-        {
-            cout << "Nos vemos pronto, gracias por jugar :)";
-        }
     }
 
+    numsEntered(user_nums, rounds);
+
     return 0;
+}
+
+void numsEntered(int user_nums[], int rounds)
+{
+    cout << "Los numeros que ingresaste fueron: ";
+    for (int i = 0; i < rounds; i++)
+    {
+        cout << user_nums[i] << " ";
+    }
+    cout << endl;
 }
