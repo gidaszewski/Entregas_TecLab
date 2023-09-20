@@ -55,7 +55,7 @@ int main()
     while (rounds < int_max)
     {
         // input
-        cout << "Adivine el numero creado aleatoriamente entre " << lim_inf << " y " << lim_sup << "\nIntento " << (rounds + 1) << " - Te quedan " << int_left << " intentos. \nIngresa un número: ";
+        cout << "<<<<<<<<<<<<------->>>>>>>>>>>>\nAdivine el numero creado aleatoriamente entre " << lim_inf << " y " << lim_sup << "\nIntento " << (rounds + 1) << " - Te quedan " << int_left << " intentos. \nIngresa un número: ";
         cin >> user_number;
 
         if (user_number < lim_inf || user_number > lim_sup)
@@ -77,7 +77,7 @@ int main()
                 {
                     if (user_nums[i] == user_number)
                     {
-                        cout << "El numero " << user_number << " ya ha sido ingresado anteriormente." << endl;
+                        cout << "--------------------------------\nEl numero " << user_number << " ya ha sido ingresado anteriormente." << endl;
                         repetitive = 1;
                         rounds--;
                         int_left++;
@@ -89,10 +89,9 @@ int main()
                 {
                     user_nums[rounds] = user_number;
                 }
-                cout << "Numero incorrecto. \n";
-
                 rounds++;
                 int_left--;
+                cout << "--------------------------------\nNumero incorrecto. \n--------------------------------" << endl;
             }
         }
     }
